@@ -27,6 +27,12 @@ router.get("/:id", (req, res) => {
 });
 
 router.post("/", (req, res) => {
+  /* req.body should look like this...
+    {
+      tag_name: "Basketball",
+      productIds: [1, 2, 3, 4]
+    }
+  */
   // create a new tag
   Tag.create(req.body)
     .then((tag) => {
@@ -56,7 +62,7 @@ router.put("/:id", (req, res) => {
     },
   })
     .then((tag) => {
-      return Tag.findAll({ where: { tag_id: req.params.id } });
+      return ProductTag.findAll({ where: { tag_id: req.params.id } });
     })
     .then((productTags) => {
       const productTagIds = productTags.map(({ product_id }) => product_id);
